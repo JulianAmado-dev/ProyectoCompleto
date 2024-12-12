@@ -27,7 +27,7 @@ router.get("/productos", productosController.consultarProductos); //trae los pro
 router.get("/productos/ofertas", productosController.consultarOfertas); //trae las ofertas, desde la pantalla home;
 
 //detalles de un producto
-router.get("/producto/nombre", productosController.consultarProductoNombre); //trae todos los datos de una producto especifico
+router.post("/producto/nombre", productosController.consultarProductoNombre); //trae todos los datos de una producto especifico
 
 //creación, consulta y anexo de productos para los pedidos de los Usuarios
 router.get("/pedidos/consultar", pedidosController.consultarPedido); // consulta que pedidos hay en la db
@@ -37,21 +37,15 @@ router.patch("/pedidos/confirmar", pedidosController.confirmarPedido); //confirm
 
 //empleado bodega
 router.get("/empleado/bodega", empleadosController.verPedidosBodega); //mira los pedidos confirmados por los clientes
-router.patch(
-  "/empleado/bodega/mandarParaEntrega",
-  empleadosController.mandarParaEntrega
-); //manda los pedidos ya alistados al personal de entrega
+router.patch("/empleado/bodega/mandarParaEntrega", empleadosController.mandarParaEntrega); //manda los pedidos ya alistados al personal de entrega
 
 //empleado entrega
 router.get("/empleado/entrega", empleadosController.verPedidosEntrega); //mira los pedidos que tengan estado de pedida "pendientes para entregar"
-router.patch(
-  "/empleado/entrega/entregarPedido",
-  empleadosController.entregarPedido
-); //confirma el recibimiento del pedido y lo cambia de estado a entregado
+router.patch("/empleado/entrega/entregarPedido", empleadosController.entregarPedido); //confirma el recibimiento del pedido y lo cambia de estado a entregado
 
 //gerente
-router.get("/gerente", empleadosController.verInformesGerente); //mira los informes disponibles
-router.get("/gerente/descargar", empleadosController.descargarInforme); //mira los informes disponibles
+//router.get("/gerente", empleadosController.verInformesGerente); //mira los informes disponibles
+//router.get("/gerente/descargar", empleadosController.descargarInforme); //mira los informes disponibles
 /**
 router.get("/usuario/compras", controller.verLista);//ver la lista de compras
 router.get("/usuario/pagos", controller.verPagos);//ver los metodos de pago, ver los metodos de entrega y confirmar pedido
@@ -63,7 +57,5 @@ FROM productos_pedidos as PP
 JOIN productos as P ON PP.codProducto = P.codProducto
 JOIN pedidos as PD ON PD.codPedido = PP.codPedido; */
 
-router.get("/informes/Seleccion", controller.search);
-router.get("/informes/", controller.search);
 
 module.exports = router;

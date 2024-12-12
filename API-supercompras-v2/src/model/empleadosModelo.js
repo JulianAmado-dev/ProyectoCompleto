@@ -13,11 +13,18 @@ Estados de los productos en la db
 */ 
 
 Empleado.verPedidosBodega = (pedido, result) => {
-  const sql = "SELECT * FROM productos_pedidos WHERE codEstado = 3 AND codPedido = ?";
+  const sql = `
+    SELECT PP.cantidadProducto, PP.codProducto, P.nombreProducto, PD.precioTotal, ME.tipoEntrega
+    FROM productos_pedidos AS PP
+    JOIN productos AS P ON PP.codProducto = P.codProducto
+    JOIN pedidos AS PD ON PD.codPedido = PP.codPedido
+    JOIN metodos_entrega AS ME ON ME.codEntrega = PD.codEntrega
+    WHERE PD.codEstado = 3;
+  `;
 
   db.query(
     sql,
-    [pedido.codEstado, pedido.codPedido],
+    [],
 
     (err, res) => {
       if (err) {
@@ -31,11 +38,17 @@ Empleado.verPedidosBodega = (pedido, result) => {
 };
 
 Empleado.verPedidosEntrega = (pedido, result) => {
-  const sql = "SELECT * FROM pedidos WHERE codEstado = 4";
+  const sql = `
+    SELECT PP.cantidadProducto, PP.codProducto, P.nombreProducto, PD.precioTotal, ME.tipoEntrega
+    FROM productos_pedidos AS PP
+    JOIN productos AS P ON PP.codProducto = P.codProducto
+    JOIN pedidos AS PD ON PD.codPedido = PP.codPedido
+    JOIN metodos_entrega AS ME ON ME.codEntrega = PD.codEntrega
+    WHERE PD.codEstado = 4;`;
 
   db.query(
     sql,
-    [pedido.codEstado],
+    [],
 
     (err, res) => {
       if (err) {
@@ -49,15 +62,15 @@ Empleado.verPedidosEntrega = (pedido, result) => {
 };
 
 Empleado.mandarParaEntrega = (pedido, result) => {
-  const sql = "SELECT * FROM Pedidos WHERE codPedido = ? AND codEstado = 3";
+  const sql = "SELECT * FROM Pedidos WHERE codPedido = ?";
   db.query(sql, [pedido.codPedido], (err, res) => {
     if (err) {
       console.log("error aqui");
       result(err, null);
     } else {
       console.log("datos revisados");
-      const sql = "UPDATE Pedidos SET codEstado = 4 WHERE codPedido = ?";
-      db.query(sql, [pedido.codEstado, pedido.codPedido], (err, res) => {
+      const sql = "UPDATE Pedidos SET codEstado = 5 WHERE codPedido = ?";
+      db.query(sql, [pedido.codPedido], (err, res) => {
         if (err) {
           result(err, null);
         } else {

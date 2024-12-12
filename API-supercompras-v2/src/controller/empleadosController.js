@@ -16,13 +16,12 @@ module.exports = {
       console.log("Controller Pedidos encontrado:  ", data.length); //for debugging
       if (data.length > 0) {
         reg = {
+          cantidadProducto: data[0].cantidadProducto,
+          codProducto: data[0].codProducto,
           precioTotal: data[0].precioTotal,
-          codPago: data[0].codPago,
-          codEntrega: data[0].codEntrega,
-          id: data[0].codPedido,
-          estado: data[0].codEstado,
-
-          
+          nombreProducto: data[0].nombreProducto,
+          tipoEntrega: data[0].tipoEntrega,
+          id: data[0].codPedido
         };
       }
 
@@ -50,11 +49,12 @@ module.exports = {
       console.log("Controller Pedidos encontrado:  ", data.length); //for debugging
       if (data.length > 0) {
         reg = {
+          cantidadProducto: data[0].cantidadProducto,
+          codProducto: data[0].codProducto,
           precioTotal: data[0].precioTotal,
-          codPago: data[0].codPago,
-          codEntrega: data[0].codEntrega,
-          id: data[0].codPedido,
-          estado: data[0].codEstado,
+          nombreProducto: data[0].nombreProducto,
+          tipoEntrega: data[0].tipoEntrega,
+          id: data[0].codPedido
         };
       }
 
@@ -92,7 +92,7 @@ module.exports = {
 
       return res.status(201).json({
         success: true,
-        message: "Pedido encontrado:" + data.length,
+        message: "Pedido a entrega:" + data.length,
         cant: data.length,
         user: reg, //Datos desde Model
       });
@@ -124,7 +124,7 @@ module.exports = {
 
       return res.status(201).json({
         success: true,
-        message: "Pedido encontrado:" + data.length,
+        message: "Pedido entregado:" + data.length,
         cant: data.length,
         user: reg, //Datos desde Model
       });
